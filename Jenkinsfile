@@ -21,11 +21,21 @@ pipeline {
             steps {
                 sh 'yarn test'
             }
+            post {
+                always {
+                    junit stdioRetention: 'ALL', testResults: '**/reports/**/*.xml'
+                }
+            }
         }
 
         stage('integration tests') {
             steps {
                 sh 'yarn test:e2e'
+            }
+            post {
+                always {
+                    junit stdioRetention: 'ALL', testResults: '**/reports/**/*.xml'
+                }
             }
         }
 
